@@ -67,10 +67,12 @@ public class DiggingGoal extends Goal {
 	}
 
 	public boolean canContinueToUse() {
+		if (this.targetBlocks.isEmpty())
+			return false;
 		if (this.properToolOnly && this.blockState != null && !this.canHarvestBlock())
 			return false;
-
-		if (this.target == null || !this.target.isAlive())
+		if (this.target == null
+				|| !this.target.isAlive())
 			return false;
 
 		//TODO move to initBlockBeak

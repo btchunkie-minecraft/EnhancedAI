@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.6
+* Fixed possible crash with Digger zombies
+
 ## 1.8.5
 * Fixed server hanging if skeletons distance from target was 0
 
