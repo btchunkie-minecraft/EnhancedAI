@@ -1,7 +1,9 @@
 # Changelog
 
 ## Upcoming
+* 'Stop mounting if too much suffocation' is now reset when dismounting
 * Fixed Breaching Creeper Explosions ignoring block hardness, making the explosion break **any** block
+* Fixed 'Stop mounting if too much suffocation' affecting players too
 
 ## 2.4.3
 * Miner mobs no longer drop experience from blocks broken

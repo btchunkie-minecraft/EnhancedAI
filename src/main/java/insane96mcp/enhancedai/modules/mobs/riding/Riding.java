@@ -56,6 +56,7 @@ public class Riding extends Feature {
     @SubscribeEvent
     public void onDamageTaken(LivingDamageEvent event) {
         if (!this.isEnabled()
+                || !(event.getEntity() instanceof Mob)
                 || !stopMountingIfSuffocating
                 || !event.getSource().is(DamageTypes.IN_WALL)
                 || event.getEntity().getVehicle() == null)
@@ -63,8 +64,10 @@ public class Riding extends Feature {
 
         float suffocatingDamageTaken = event.getEntity().getPersistentData().getFloat(SUFFOCATION_WHILE_RIDING);
         suffocatingDamageTaken += event.getAmount();
-        if (suffocatingDamageTaken >= 6f)
+        if (suffocatingDamageTaken >= 6f) {
             event.getEntity().stopRiding();
+            event.getEntity().getPersistentData().remove(SUFFOCATION_WHILE_RIDING);
+        }
         else
             event.getEntity().getPersistentData().putFloat(SUFFOCATION_WHILE_RIDING, suffocatingDamageTaken);
     }
