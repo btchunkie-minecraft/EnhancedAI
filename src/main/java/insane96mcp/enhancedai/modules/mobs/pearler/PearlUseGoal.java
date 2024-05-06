@@ -30,7 +30,7 @@ public class PearlUseGoal extends Goal {
 		if (target == null)
 			return false;
 
-		if (this.pearler.isInWaterOrBubble())
+		if (this.pearler.isUnderWater())
 			return false;
 
 		//5 blocks distance

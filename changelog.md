@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Pearler and Fisher Mobs can now use the item as long as they are not underwater (they couldn't throw them if touching water)
+
 ## 2.4.4
 * 'Stop mounting if too much suffocation' is now reset when dismounting
 * Fixed Breaching Creeper Explosions ignoring block hardness, making the explosion break **any** block

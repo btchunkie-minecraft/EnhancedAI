@@ -28,7 +28,7 @@ public class FishingTargetGoal extends Goal {
 		if (target == null)
 			return false;
 
-		if (this.fisher.isInWaterOrBubble())
+		if (this.fisher.isUnderWater())
 			return false;
 
 		//24 & 1 blocks
