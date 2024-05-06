@@ -1,7 +1,9 @@
 # Changelog
 
 ## Upcoming
-* Pearler and Fisher Mobs can now use the item as long as they are not underwater (they couldn't throw them if touching water)
+* Pearler and Fisher Mobs can now use the item as long as they are not underwater (they couldn't use them if touching water)
+* Pearler mobs no longer use the pearl if they can't see the target
+* Pearler mobs cooldown to throw a pearl increased
 
 ## 2.4.4
 * 'Stop mounting if too much suffocation' is now reset when dismounting
