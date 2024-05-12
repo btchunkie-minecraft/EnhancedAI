@@ -1,5 +1,8 @@
 # Changelog
 
+## 1.8.7
+* Fixed `Digger Zombie.Blacklist Tile Entities` not working when disabled
+
 ## 1.8.6
 * Fixed possible crash with Digger zombies
 

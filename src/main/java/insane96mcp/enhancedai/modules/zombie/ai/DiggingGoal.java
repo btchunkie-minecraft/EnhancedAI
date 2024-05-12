@@ -160,7 +160,9 @@ public class DiggingGoal extends Goal {
 
 			BlockState state = this.digger.level.getBlockState(rayTraceResult.getBlockPos());
 
-			if (state.hasBlockEntity() || state.getDestroySpeed(this.digger.level, rayTraceResult.getBlockPos()) == -1)
+			if (state.hasBlockEntity() && DiggerZombie.blacklistTileEntities)
+				continue;
+			if (state.getDestroySpeed(this.digger.level, rayTraceResult.getBlockPos()) == -1)
 				continue;
 
 			if (DiggerZombie.blockBlacklist.isBlockBlackOrNotWhiteListed(state.getBlock()))
