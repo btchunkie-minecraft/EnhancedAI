@@ -28,8 +28,10 @@ import net.minecraft.world.entity.ai.goal.SwellGoal;
 import net.minecraft.world.entity.ai.goal.WrappedGoal;
 import net.minecraft.world.entity.monster.Creeper;
 import net.minecraft.world.level.Explosion;
+import net.minecraft.world.level.Level;
 import net.minecraft.world.phys.Vec3;
 import net.minecraftforge.event.entity.EntityJoinLevelEvent;
+import net.minecraftforge.event.entity.EntityLeaveLevelEvent;
 import net.minecraftforge.event.entity.living.LivingDamageEvent;
 import net.minecraftforge.event.entity.living.LivingEvent;
 import net.minecraftforge.event.level.ExplosionEvent;
@@ -101,7 +103,10 @@ public class CreeperSwell extends Feature {
 	public static Boolean angryName = true;
 	@Config
 	@Label(name = "Angry Creeper.Force Explosion", description = "When ignited, Angry Creeper will not stop swelling")
-	public static Boolean angryForceExplosion = true;
+	public static Boolean angryForceExplosion = false;
+	@Config
+	@Label(name = "Angry Creeper.Explode on death", description = "Makes angry creepers blow up on death like when they were added back in 0.30")
+	public static Boolean angryExplodeOnDeath = true;
 	@Config
 	@Label(name = "Angry Creeper.Generates fire", description = "If true, Angry Creeper explosion will generate fire")
 	public static Boolean angryFire = false;
@@ -111,6 +116,9 @@ public class CreeperSwell extends Feature {
 	@Config
 	@Label(name = "Angry Creeper.Forced Explosion", description = "Angry Creeper will not stop swelling when triggered")
 	public static Boolean angryForcedExplosion = true;
+	@Config
+	@Label(name = "Blow up on death", description = "Makes creepers blow up on death like when they were added back in 0.30")
+	public static BlowUpOnDeath blowUpOnDeath = BlowUpOnDeath.NONE;
 	@Config
 	@Label(name = "IguanaTweaks Reborn Integration", description = "If IguanaTweaks Reborn is installed and Explosion Overhaul is enabled, Angry creeper will deal more knockback and break more blocks and breaching creepers will break more blocks")
 	public static Boolean iguanaTweaksIntegration = true;
@@ -178,7 +186,7 @@ public class CreeperSwell extends Feature {
 				persistentData.putBoolean(ILStrings.Tags.EXPLOSION_CAUSES_FIRE, true);
 			if (iguanaTweaksIntegration) {
 				persistentData.putFloat("iguanatweaksreborn:explosion_knockback_multiplier", 2f);
-				persistentData.putFloat("iguanatweaksreborn:explosion_ray_strength_multiplier", 0.02f);
+				persistentData.putFloat("iguanatweaksreborn:explosion_ray_strength_multiplier", 0.03f);
 			}
 		}
 
@@ -209,6 +217,22 @@ public class CreeperSwell extends Feature {
 			return;
 
 		creeper.ignite();
+	}
+
+	@SubscribeEvent
+	public void onCreeperRemoved(EntityLeaveLevelEvent event) {
+		if (!this.isEnabled()
+				|| !(event.getEntity() instanceof Creeper creeper)
+				|| !creeper.isDeadOrDying())
+			return;
+
+		if (blowUpOnDeath == BlowUpOnDeath.ALL || (blowUpOnDeath == BlowUpOnDeath.CHARGED && creeper.isPowered()) || (creeper.getPersistentData().getBoolean(ANGRY) && angryExplodeOnDeath)) {
+			if (!creeper.level().isClientSide) {
+				float f = creeper.isPowered() ? 2.0F : 1.0F;
+				creeper.level().explode(creeper, creeper.getX(), creeper.getY(), creeper.getZ(), (float)creeper.explosionRadius * f, Level.ExplosionInteraction.MOB);
+				creeper.spawnLingeringCloud();
+			}
+		}
 	}
 
 	@SubscribeEvent
@@ -286,5 +310,11 @@ public class CreeperSwell extends Feature {
 			this.fuse = fuse;
 			this.explode = explode;
 		}
+	}
+
+	public enum BlowUpOnDeath {
+		NONE,
+		CHARGED,
+		ALL
 	}
 }
