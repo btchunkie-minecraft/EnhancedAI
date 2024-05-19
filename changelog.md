@@ -1,6 +1,6 @@
 # Changelog
 
-## Upcoming
+## 2.4.5
 * Angry creepers now blow up after death like 0.30 creepers
   * Configurable to also make charged creepers only or any creeper to behave the same
 * Pearler and Fisher Mobs can now use the item as long as they are not underwater (they couldn't use them if touching water)
