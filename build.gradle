@@ -100,6 +100,10 @@ dependencies {
     
     annotationProcessor "org.spongepowered:mixin:${mixin_version}:processor"
 
+    compileOnly(annotationProcessor("io.github.llamalad7:mixinextras-common:0.3.6"))
+    implementation(jarJar("io.github.llamalad7:mixinextras-forge:0.3.6")) {
+        jarJar.ranged(it, "[0.3.6,)")
+    }
     //implementation fg.deobf("curse.maven:majrusz-library-437409:4703098")
     //implementation fg.deobf("curse.maven:majruszs-progressive-difficulty-430642:4753802")
 

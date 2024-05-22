@@ -1,5 +1,6 @@
 package insane96mcp.enhancedai.mixin;
 
+import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
 import insane96mcp.enhancedai.modules.mobs.MeleeAttacking;
 import insane96mcp.insanelib.base.Feature;
 import net.minecraft.world.InteractionHand;
@@ -57,15 +58,23 @@ public abstract class MeleeAttackGoalMixin extends Goal {
 		return 0L;
 	}
 
-	@Inject(at = @At(value = "RETURN"), method = "canContinueToUse", cancellable = true)
+	/*@Inject(method = "canContinueToUse", at = @At(value = "RETURN", ordinal = 2), cancellable = true)
 	public void onCanContinueToUse(CallbackInfoReturnable<Boolean> cir) {
-		if (!cir.getReturnValue() && this.mob.getTarget() != null && this.mob.distanceToSqr(this.mob.getTarget()) < 10) {
+		if (!cir.getReturnValue() && this.mob.getTarget() != null) {
 			this.path = this.mob.getNavigation().createPath(this.mob.getTarget(), 0);
 			if (this.path != null) {
 				this.mob.getNavigation().moveTo(this.path, this.speedModifier);
 				cir.setReturnValue(true);
 			}
 		}
+		cir.setReturnValue(true);
+	}*/
+
+	@ModifyExpressionValue(method = "canContinueToUse", at = @At(value = "FIELD", target = "Lnet/minecraft/world/entity/ai/goal/MeleeAttackGoal;followingTargetEvenIfNotSeen:Z"))
+	public boolean onFollowingTargetEvenIfNotSeen(boolean value) {
+		if (Feature.isEnabled(MeleeAttacking.class))
+			return true;
+		return value;
 	}
 
 	@Inject(at = @At(value = "RETURN"), method = "getAttackInterval", cancellable = true)

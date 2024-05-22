@@ -1,5 +1,9 @@
 # Changelog
 
+## 2.4.6
+* [MC-198068](https://bugs.mojang.com/browse/MC-198068) again
+  * Fixed attack rate resetting when mobs were hit. I've removed the `followingTargetEvenIfNotSeen` check in `canContinueToUse`
+
 ## 2.4.5
 * Angry creepers now blow up after death like 0.30 creepers
   * Configurable to also make charged creepers only or any creeper to behave the same
