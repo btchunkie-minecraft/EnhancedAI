@@ -122,9 +122,15 @@ jar {
             "MixinConfigs": "enhancedai.mixins.json"
         ])
     }
+
+    archiveClassifier = 'no-jar-jar'
 }
 
-jar.finalizedBy('reobfJar') 
+jar.finalizedBy('reobfJar')
+
+tasks.named('jarJar') {
+    archiveClassifier = ''
+}
 
 publishing {
     publications {
