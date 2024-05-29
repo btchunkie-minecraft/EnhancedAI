@@ -1,5 +1,9 @@
 # Changelog
 
+## Upcoming
+* Fixed mobs neglecting to use the melee attack goal if too close to the entity
+  * Not sure if this does anything, but I missed changing this when porting the melee attack range from 1.20.2
+
 ## 2.4.6
 * [MC-198068](https://bugs.mojang.com/browse/MC-198068) again
   * Fixed attack rate resetting when mobs were hit. I've removed the `followingTargetEvenIfNotSeen` check in `canContinueToUse`

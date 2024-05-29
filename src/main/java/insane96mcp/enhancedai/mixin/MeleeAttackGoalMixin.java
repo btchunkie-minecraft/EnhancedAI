@@ -1,6 +1,8 @@
 package insane96mcp.enhancedai.mixin;
 
 import com.llamalad7.mixinextras.injector.ModifyExpressionValue;
+import com.llamalad7.mixinextras.injector.ModifyReturnValue;
+import com.llamalad7.mixinextras.sugar.Local;
 import insane96mcp.enhancedai.modules.mobs.MeleeAttacking;
 import insane96mcp.insanelib.base.Feature;
 import net.minecraft.world.InteractionHand;
@@ -16,9 +18,7 @@ import org.spongepowered.asm.mixin.Mixin;
 import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
-import org.spongepowered.asm.mixin.injection.Constant;
 import org.spongepowered.asm.mixin.injection.Inject;
-import org.spongepowered.asm.mixin.injection.ModifyConstant;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -53,9 +53,14 @@ public abstract class MeleeAttackGoalMixin extends Goal {
 		ci.cancel();
 	}
 
-	@ModifyConstant(method = "canUse", constant = @Constant(longValue = 20L))
-	public long onCanUse(long constant) {
+	@ModifyExpressionValue(method = "canUse", at = @At(value = "CONSTANT", args = "longValue=20"))
+	public long onLastCanUseCheck(long constant) {
 		return 0L;
+	}
+
+	@ModifyReturnValue(method = "canUse", at = @At(value = "RETURN", ordinal = 6))
+	public boolean onCanUse(boolean original, @Local LivingEntity livingEntity) {
+		return MeleeAttacking.isWithinMeleeAttackRange(this.mob, livingEntity);
 	}
 
 	/*@Inject(method = "canContinueToUse", at = @At(value = "RETURN", ordinal = 2), cancellable = true)
