@@ -6,12 +6,14 @@ import com.llamalad7.mixinextras.sugar.Local;
 import insane96mcp.enhancedai.modules.mobs.MeleeAttacking;
 import insane96mcp.insanelib.base.Feature;
 import net.minecraft.world.InteractionHand;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
 import net.minecraft.world.entity.PathfinderMob;
 import net.minecraft.world.entity.ai.attributes.AttributeInstance;
 import net.minecraft.world.entity.ai.attributes.Attributes;
 import net.minecraft.world.entity.ai.goal.Goal;
 import net.minecraft.world.entity.ai.goal.MeleeAttackGoal;
+import net.minecraft.world.entity.ai.navigation.PathNavigation;
 import net.minecraft.world.level.pathfinder.Path;
 import org.spongepowered.asm.mixin.Final;
 import org.spongepowered.asm.mixin.Mixin;
@@ -19,6 +21,7 @@ import org.spongepowered.asm.mixin.Shadow;
 import org.spongepowered.asm.mixin.Unique;
 import org.spongepowered.asm.mixin.injection.At;
 import org.spongepowered.asm.mixin.injection.Inject;
+import org.spongepowered.asm.mixin.injection.Redirect;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfo;
 import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 
@@ -61,6 +64,12 @@ public abstract class MeleeAttackGoalMixin extends Goal {
 	@ModifyReturnValue(method = "canUse", at = @At(value = "RETURN", ordinal = 6))
 	public boolean onCanUse(boolean original, @Local LivingEntity livingEntity) {
 		return MeleeAttacking.isWithinMeleeAttackRange(this.mob, livingEntity);
+	}
+
+	@Redirect(method = "tick", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/entity/ai/navigation/PathNavigation;moveTo(Lnet/minecraft/world/entity/Entity;D)Z"))
+	public boolean onMoveTo(PathNavigation pathNavigation, Entity entity, double speedModifier) {
+		Path path = this.mob.getNavigation().createPath(entity, 0);
+		return path != null && this.mob.getNavigation().moveTo(path, speedModifier);
 	}
 
 	/*@Inject(method = "canContinueToUse", at = @At(value = "RETURN", ordinal = 2), cancellable = true)

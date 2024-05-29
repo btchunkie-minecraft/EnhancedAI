@@ -1,6 +1,8 @@
 # Changelog
 
 ## Upcoming
+* Fixed mobs staying at close distance but not reaching for attacking
+  * The previous version fix increased the chance for mobs to stay at close distance but not moving to get close to attack
 * Fixed mobs neglecting to use the melee attack goal if too close to the entity
   * Not sure if this does anything, but I missed changing this when porting the melee attack range from 1.20.2
 
