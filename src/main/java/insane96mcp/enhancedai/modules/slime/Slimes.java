@@ -20,7 +20,7 @@ public class Slimes extends Feature {
     public static final TagKey<EntityType<?>> AFFECT_SLIME_JUMP_RATE = TagKey.create(Registries.ENTITY_TYPE, new ResourceLocation(EnhancedAI.MOD_ID, "affect_slime_jump_rate"));
     @Config(min = 0, max = 16)
     @Label(name = "Max spawn size", description = "Changes the max size a Slime/Magma cube can spawn as. Vanilla is max 4 with 3 excluded. Set to 0 to disable.")
-    public static Integer maxSpawnSize = 6;
+    public static Integer maxSpawnSize = 5;
 
     /*@Config
     @Label(name = "Faster swimming")

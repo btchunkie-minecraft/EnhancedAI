@@ -1,5 +1,8 @@
 # Changelog
 
+## Upcoming
+* Reduced max slime sizes spawn
+
 ## 2.4.7
 * Fixed mobs staying at close distance but not reaching for attacking
   * The previous version fix increased the chance for mobs to stay at close distance but not moving to get close to attack
