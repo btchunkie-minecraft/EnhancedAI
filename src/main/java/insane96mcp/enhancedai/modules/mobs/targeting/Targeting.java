@@ -66,7 +66,7 @@ public class Targeting extends JsonFeature {
 	@Label(name = "XRay Range Override", description = "How far away can the mobs see the player even through walls. Setting 'Max' to 0 will make mobs not able to see through walls. I recommend using mods like Mobs Properties Randomness to have more control over the attribute; the attribute name is 'enhancedai:generic.xray_follow_range'.")
 	public static MinMax xrayRangeOverride = new MinMax(12, 24);
 	@Config
-	@Label(name = "Targeting Override for non-Players", description = "By default, the new targeting AI only changes for targeting players. Setting this to true allows overriding target AI for entities other than players")
+	@Label(name = "Targeting Override for non-Players", description = "By default, the new targeting AI only changes for targeting players. Setting this to true allows overriding target AI for entities other than players. Please note this might break specific AIs")
 	public static Boolean targetingOverrideForNonPlayers = false;
 	@Config
 	@Label(name = "Instant Target", description = "Mobs will no longer take random time to target a player.")
