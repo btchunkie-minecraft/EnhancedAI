@@ -189,7 +189,7 @@ public class EACreeperSwellGoal extends Goal {
 		return this.isStuck()
 				&& !creeper.getSensing().hasLineOfSight(target)
 				&& !creeper.isInWater()
-				&& xzDistance < (CreeperUtils.getExplosionSizeSqr(creeper) * 5d * 5d)
+				&& xzDistance < CreeperSwell.breachHorizontalRange * CreeperSwell.breachHorizontalRange
 				&& yDistance > -CreeperUtils.getExplosionSize(creeper) - 2;
 	}
 
