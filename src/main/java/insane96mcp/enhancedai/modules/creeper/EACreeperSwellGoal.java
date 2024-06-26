@@ -101,8 +101,8 @@ public class EACreeperSwellGoal extends Goal {
 	public void tick() {
 		if (this.creeperAttackTarget == null || !this.creeperAttackTarget.isAlive())
 			this.tryCancelSwell();
-		if (this.isBreaching && this.swellingCreeper.distanceToSqr(this.creeperAttackTarget) >= 14 * 14)
-			this.tryCancelSwell();
+		/*if (this.isBreaching && this.swellingCreeper.distanceToSqr(this.creeperAttackTarget) >= CreeperSwell.breachHorizontalRange * CreeperSwell.breachHorizontalRange)
+			this.tryCancelSwell();*/
 		else if (this.swellingCreeper.distanceToSqr(this.creeperAttackTarget) > (explosionSizeSqr * 2d * 2d) && !isBreaching)
 			this.tryCancelSwell();
 		else if (!this.swellingCreeper.getSensing().hasLineOfSight(this.creeperAttackTarget) && !ignoreWalls && !isBreaching)
