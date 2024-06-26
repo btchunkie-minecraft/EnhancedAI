@@ -1,6 +1,7 @@
 # Changelog
 
 ## Upcoming
+* Added a config option to allow targeting changes to work on non-players target (e.g. Zombies targeting Villagers)
 * Reduced max slime sizes spawn
 
 ## 2.4.7
