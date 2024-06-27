@@ -176,12 +176,12 @@ public class Targeting extends JsonFeature {
 			if (isNeutral)
 				continue;
 
-			EANearestAttackableTarget<Player> newTargetGoal;
+			EANearestAttackableTarget<? extends LivingEntity> newTargetGoal;
 
 			if (mob instanceof Spider)
-				newTargetGoal = new EASpiderTargetGoal<>((Spider) mob, Player.class, true, false, goal.targetConditions);
+				newTargetGoal = new EASpiderTargetGoal<>((Spider) mob, goal.targetType, true, false, goal.targetConditions);
 			else
-				newTargetGoal = new EANearestAttackableTarget<>(mob, Player.class, false, false, goal.targetConditions);
+				newTargetGoal = new EANearestAttackableTarget<>(mob, goal.targetType, false, false, goal.targetConditions);
 
 			if (instaTarget)
 				newTargetGoal.setInstaTarget();
