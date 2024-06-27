@@ -5,6 +5,9 @@
 * Breaching creepers can now breach from 24 blocks instead of the radius times 5
   * Added config option
   * Fixed Breaching creepers having a hard cap of 14 blocks range
+* Fisher mobs
+  * Fishing in player's inventory now has a cooldown (after fishing in the players' inventory the fisher needs to hook 4 times before being able to fish players' inventory again)
+  * No longer need to be on ground to hook
 * Reduced max slime sizes spawn
 
 ## 2.4.7

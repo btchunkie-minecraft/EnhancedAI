@@ -13,6 +13,7 @@ public class FishingTargetGoal extends Goal {
 	private final Mob fisher;
 	private LivingEntity target;
 	private int cooldown = reducedTickDelay(60);
+	private int inventoryHookCooldown = 0;
 
 	private int reel;
 	private int fishingHookLifetime = 0;
@@ -69,13 +70,14 @@ public class FishingTargetGoal extends Goal {
 
 	public void tick() {
 		this.fisher.getLookControl().setLookAt(this.target);
-		boolean isOnGround = this.fishingHook.onGround();
-		if (isOnGround || this.fishingHook.getHookedIn() != null || --this.fishingHookLifetime <= 0) {
-			//if (isOnGround)
+		if (this.fishingHook.getHookedIn() != null || --this.fishingHookLifetime <= 0) {
 			--this.reel;
 			if (--this.reel <= 0) {
 				this.fishingHook.level().playSound(null, this.fisher.getX(), this.fisher.getY(), this.fisher.getZ(), SoundEvents.FISHING_BOBBER_RETRIEVE, SoundSource.HOSTILE, 1.0F, 0.4F / (this.fisher.getRandom().nextFloat() * 0.4F + 0.8F));
-				this.fishingHook.retrieve(this.fisher.getRandom().nextDouble() < FisherMobs.hookInventoryChance);
+				boolean isInventoryHooked = this.fisher.getRandom().nextDouble() < FisherMobs.hookInventoryChance;
+				this.fishingHook.retrieve(--inventoryHookCooldown <= 0 && isInventoryHooked);
+				if (inventoryHookCooldown <= 0 && isInventoryHooked)
+					inventoryHookCooldown = 4;
 			}
 		}
 	}
